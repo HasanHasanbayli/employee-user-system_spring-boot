@@ -4,6 +4,12 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
+        @NamedQuery(name = "Employee.findFullById", query = "SELECT e FROM Employee e LEFT OUTER JOIN " +
+                "FETCH e.job LEFT OUTER JOIN FETCH e.department WHERE e.employeeId = :employeeId"),
+        @NamedQuery(name = "Employee.count", query = "SELECT count(e) FROM Employee e")
+})
 public class Employee {
 
     @Id
@@ -31,7 +37,7 @@ public class Employee {
     private Job job;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Department.class)
-    @JoinColumn(name = "department_id" )
+    @JoinColumn(name = "department_id")
     private Department department;
 
     public Employee() {

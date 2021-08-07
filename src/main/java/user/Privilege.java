@@ -1,12 +1,20 @@
 package user;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Privilege {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "privilege_id")
     private Long id;
 
+    @Column
     private String name;
 
+    @ManyToMany(mappedBy="privileges")
     private List<Role> roles;
 
     public Privilege() {

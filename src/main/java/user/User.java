@@ -1,16 +1,26 @@
 package user;
 
+import javax.persistence.*;
+
+@Entity
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
     private Long id;
 
+    @Column
     private String firstName;
 
     private String lastName;
 
+    @Column(unique = true, nullable = false)
     private String userName;
 
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(length = 60)
     private String password;
 
     private boolean enabled;
@@ -21,6 +31,8 @@ public class User {
 
     private boolean accountNonLocked;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id")
     private Role role;
 
     public User() {

@@ -1,15 +1,25 @@
 package user;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Role {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "long_id")
     private Long id;
 
+    @Column
     private String name;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "Roles_Privlegs", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
     private List<Privilege> privileges;
 
+    @OneToMany(mappedBy = "role")
     private List<User> users;
 
     public Role() {
